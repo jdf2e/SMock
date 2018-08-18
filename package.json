@@ -18,7 +18,7 @@
     "server",
     "smock"
   ],
-  "author": "liaoyanli",
+  "author": "jdc-fe",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.3",
