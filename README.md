@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Swagger Mock FE</h1>
+  <h1>JD Swagger Mock</h1>
   <p>分析Swagger文档，输出相应的mock数据，并启动node服务，供前端开发时调试使用，提高前端开发效率，支持跨域访问</p>
 </div>
 

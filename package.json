@@ -1,0 +1,33 @@
+{
+  "name": "jdsmock",
+  "version": "1.0.0",
+  "description": "分析Swagger文档，输出相应的mock数据，并启动node服务，供前端开发时调试使用，提高前端开发效率",
+  "main": "index.js",
+  "bin": {
+    "s2": "bin/smock.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.jd.com:jdcfe/Smock.git"
+  },
+  "keywords": [
+    "swagger",
+    "mock",
+    "swagger-mock",
+    "node",
+    "server",
+    "smock"
+  ],
+  "author": {
+    "name": "jdc前端开发部",
+    "email": "liaoyanli@jd.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "request": "^2.87.0"
+  },
+  "devDependencies": {
+    "commander": "^2.17.1"
+  }
+}
