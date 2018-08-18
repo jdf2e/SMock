@@ -12,9 +12,9 @@ npm install jdcfe-smock -g
 ### 初始化SMock.json文件
 
 <p>
-1. 在对应的项目根目录下执行s2 init命令
-2. 按照提示输入相应的配置，如果不知道请一路填空
-3. 检查SMock.json里的配置是否正确
+1. 在对应的项目根目录下执行s2 init命令<br>
+2. 按照提示输入相应的配置，如果不知道请一路填空<br>
+3. 检查SMock.json里的配置是否正确<br>
 </p>
 
 ### 参数说明
@@ -27,14 +27,14 @@ npm install jdcfe-smock -g
 |port| integer| swagger文档地址端口号, 默认80
 |projectName| string| 项目名，默认值swaggermock
 |mockPort| string| 本地mock服务启动后的端口，默认为3001
-|headers| object| 一般用于host的配置
+|headers| object| 一般用于host的配置，swagger文档IP对应的访问域名，此处需要配置是在ip直接访问不了的情况下。配置举例：{"host":"jd.com"}
 
 
 ### 运行
 
 <p>
-1. 在项目根目录下执行s2 run
-2. 在项目中调用mock服务
+1. 在项目根目录下执行s2 run<br>
+2. 在项目中调用mock服务<br>
 </p>
 
 ### 使用说明
