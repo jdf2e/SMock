@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+let smock = require('./../lib/smock.js');
+smock.init(process.argv);
