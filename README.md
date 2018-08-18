@@ -6,13 +6,13 @@
 ### 安装
 
 ```bash
-npm install --save-dev jdsmock
+npm install jdcfe-smock -g
 ```
 
 ### 初始化SMock.json文件
 
 <p>
-1. 在对应的项目根目录下执行jdsmock init命令
+1. 在对应的项目根目录下执行s2 init命令
 2. 按照提示输入相应的配置，如果不知道请一路填空
 3. 检查SMock.json里的配置是否正确
 </p>
@@ -33,7 +33,7 @@ npm install --save-dev jdsmock
 ### 运行
 
 <p>
-1. 在项目根目录下执行jdsmock run
+1. 在项目根目录下执行s2 run
 2. 在项目中调用mock服务
 </p>
 
@@ -50,5 +50,3 @@ http://127.0.0.1:3000/xxx/xxx/xxx.do
 <p>
 所有的接口路径请求，都生成在${projectName}/urlsReal.js里
 </p>
-
-# jdsmock
