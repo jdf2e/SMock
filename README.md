@@ -28,7 +28,7 @@ npm install jdcfe-smock -g
 |projectName| string| 项目名，默认值swaggermock
 |mockPort| string| 本地mock服务启动后的端口，默认为3000
 |headers| object| 一般用于host的配置，swagger文档IP对应的访问域名，此处需要配置是在ip直接访问不了的情况下。配置举例：{"host":"jd.com"}
-|customProtocol| string| swagger文档支持的协议请求 http/https
+|customProtocol| string| swagger文档支持的协议请求 http/https，此处如果配合为https，请注意port也需要配置正确
 
 
 ### 运行
