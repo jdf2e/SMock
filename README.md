@@ -21,13 +21,14 @@ npm install jdcfe-smock -g
 
 |Attributes|forma|describe
 |---|---|---|
-|host| string| 需要mock的文档地址ip,必填
+|host| string| 需要mock的文档地址ip
 |hostname|string| 需要mock的文档访问域名，如果此处传入任何值，host字段则不生效
-|path|string| 需要mock的文档数据请求路径，在swagger文档页面可以找到
-|port| integer| 需要mock的文档地址端口号, 默认80
+|path|string| 需要mock的文档数据请求路径，在swagger文档页面可以找到，如：/v2/api-docs
+|port| integer| 需要mock的文档地址端口号， 默认80，如果协议配置为https，此参数需要设置为443
 |projectName| string| 项目名，默认值swaggermock
-|mockPort| string| 本地mock服务启动后的端口，默认为3001
+|mockPort| string| 本地mock服务启动后的端口，默认为3000
 |headers| object| 一般用于host的配置，swagger文档IP对应的访问域名，此处需要配置是在ip直接访问不了的情况下。配置举例：{"host":"jd.com"}
+|customProtocol| string| swagger文档支持的协议请求 http/https
 
 
 ### 运行
