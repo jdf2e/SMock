@@ -1,3 +1,5 @@
-#!/usr/bin/env node
-let smock = require('./../lib/smock.js');
-smock.init(process.argv);
+#! /usr/bin/env node
+
+// let smock = require('./../lib/index.js');
+// smock.init(process.argv);
+require('./../lib/test.js');
