@@ -2,4 +2,4 @@
 
 // let smock = require('./../lib/index.js');
 // smock.init(process.argv);
-require('./../lib/test.js');
+require('./../lib/smock.js');

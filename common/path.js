@@ -1,7 +1,13 @@
 let path = require('path');
-let join = (a, b) => {
+
+function join(a, b) {
     return path.resolve(a, b);
 }
+
+function join2(a, b, c) {
+    return path.join(a, b, c);
+}
 module.exports = {
-    join
+    join,
+    join2
 }
