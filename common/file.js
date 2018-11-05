@@ -1,3 +1,7 @@
+/** 
+ * 文件
+ * author: liaoyanli
+ */
 let fs = require('fs');
 let utils = require('./utils');
 //文件是否存在

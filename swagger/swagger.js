@@ -1,21 +1,16 @@
+/**
+ * swagger文档主逻辑
+ * author: liaoyanli
+ */
 let utils = require('./../common/utils');
 let pathDeal = require('./../common/path');
 let file = require('./../common/file');
 let namespace = require('./../common/namespace');
-let express = require('express');
-let app = express();
-//默认参数
-let defaultConfig = {
-    host: '', //接口文档ip
-    hostname: '', //接口文档域名
-    port: 80, //接口文档端口
-    path: '/v2/api-docs',
-    method: 'GET',
-    projectName: 'swagger', //项目名称
-    mockPort: 3000, //模块数据服务端口
-    customProtocol: 'http', //接口文档协议
-    jsPath: '' //指定生成的URL文件创建路径，相对当前项目根目录
-};
+// let express = require('express');
+// let app = express();
+let configJS = require('./config');
+let serverJS = require('./server');
+let modelJS = require('./model');
 
 let Config = {}; //获取到用户的相关配置
 let UrlsReal = {}; //urls
@@ -27,23 +22,8 @@ let GlobalDefinitions = {}; //
 let MakeFilePromiseArray = []; //用于检测异步json文件写入是否全部完成
 
 function init(c) {
-    Config = dealConfig(c);
+    Config = configJS.dealConfig(c);
     getJsonData();
-}
-
-//处理参数
-function dealConfig(c) {
-    if (c.hostname) {
-        c.headers = {
-            host: c.hostname
-        };
-    }
-    if (c.customProtocol == 'https') {
-        c.port = 443;
-    }
-    //mock文件夹名
-    c.mockDirName = `${c.projectName?c.projectName:defaultConfig.projectName}mock`;
-    return Object.assign(defaultConfig, c);
 }
 
 //获取swagger接口数据
@@ -106,35 +86,12 @@ function startServer() {
                 utils.warn(errorUrls[i]);
             }
         }
-        app.listen(Config.mockPort, () => {
+        serverJS.runServer(Config.mockPort, () => {
             utils.log(`【${new Date()}】服务器启动!`);
             utils.log(`http://127.0.0.1:${Config.mockPort}`);
-        });
+        })
     }).catch((e) => {
         utils.error(e);
-    });
-}
-
-//创建server链接
-function createServer(url, mockDir, type) {
-    let requreMockJson = require(mockDir);
-    let realUrl = utils.dealUrl(url)
-    app[type](realUrl, function(req, res) {
-        console.log('请求时间：' + new Date());
-        console.log('请求路径：' + url);
-        console.log('请求方式：' + type);
-        console.log('请求参数：' + JSON.stringify(req.params));
-        // res.header('Content-type', 'application/json');
-        // res.header('Charset', 'utf8');
-        res.header("Access-Control-Allow-Origin", req.headers.origin);
-        res.header('Access-Control-Allow-Credentials', true); //告诉客户端可以在HTTP请求中带上Cookie
-        res.header("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, " +
-            "Last-Modified, Cache-Control, Expires, Content-Type, Content-Language, Cache-Control, X-E4M-With,X_FILENAME");
-        res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-        res.header("X-Powered-By", ' 3.2.1')
-        res.header("Content-Type", "application/json;charset=utf-8");
-        // res.send(req.query.callback + '(' + JSON.stringify(requreMockJson) + ');');
-        res.send(JSON.stringify(requreMockJson));
     });
 }
 
@@ -164,7 +121,7 @@ function loopType(key, obj) {
         UrlCounter++;
         pathKey = typecontent.operationId; //接口的唯一名
         makeUrlsReal(pathKey, key, typekey); //pathKey为url信息的关键字,key为接口请求url路径、 typekey为接口请求类型， 请结合数据看
-        makeMockJson(pathKey, typecontent, typekey); //生成单个文件的json数据并生成json文件
+        makeMockJson(pathKey, typecontent, typekey, key); //生成单个文件的json数据并生成json文件
 
     }
 
@@ -190,122 +147,66 @@ function makeUrlsReal(pathKey, url, type) {
     }; //此数据用户汇聚所有接口请求路径及对应请求
 }
 
-//生成url聚合文件
+//生成url聚合文件,此处不需要写入成功或失败回调，所以用同步
 function makeUrlsFile() {
-    let content = utils.toStr(UrlsReal); //将要写入文件的内容串
+    let jsContent = customJsTpl();
     let mockDirName = Config.mockDirName; //默认mock相关文件目录名
-    let filePath = pathDeal.join2(process.cwd(), mockDirName, namespace.urlsRealName); //默认生成位置，如果用户配置则生成至用户配置的位置
+    let jsFilePath = pathDeal.join2(process.cwd(), mockDirName, `${namespace.urlsRealName}.js`); //默认生成位置，如果用户配置则生成至用户配置的位置
 
-    if (Config.jsPath) { //用户如果有自定义文件目录
-        let customFilePath = pathDeal.join(process.cwd(), Config.jsPath);
+    if (Config.jsPath) { //用户如果有自定义文件目录，则需要生成至用户自定义目录
+        let customFileDir = pathDeal.join(process.cwd(), Config.jsPath);
         createCustomDir(customFilePath);
-        filePath = pathDeal.join(customFilePath, namespace.urlsRealName);
+        jsFilePath = pathDeal.join(customFileDir, `${namespace.urlsRealName}.js`);
+
     }
-    file.makeFileSync(filePath, content); //此处不需要写入成功或失败回调，所以用同步
+    file.makeFileSync(jsFilePath, jsContent); //生成一个js文件
+
+    let jsonFilePath = pathDeal.join2(process.cwd(), mockDirName, `${namespace.urlsRealName}.json`); //生成一个json文件，只有全部url
+    let jsonContent = utils.toStr(UrlsReal); //将要写入文件的内容串
+    file.makeFileSync(jsonFilePath, jsonContent); //生成一个json文件只有url
+}
+
+//根据用户定义的参数，生成指定格式的url聚合文件
+function customJsTpl() {
+    let tpl = require('./urlTpl');
+    let hostname = Config.hostname;
+    let host = hostname ? hostname : Config.host;
+    return tpl.getTpl(UrlsReal, Config.mockPort, host);
 }
 
 //生成接口mock数据json内容
-function makeMockJson(pathkey, typecontent, typekey) {
+function makeMockJson(jsonFileName, typecontent, typekey, url) {
     let mockJson = {};
     let schema = typecontent.responses['200'].schema;
     let mockJsonKey = schema ? schema['$ref'] : ''; //此数据用于查询数据模型
     if (mockJsonKey) {
-        let tempkey = queryData(mockJsonKey);
-        mockJson = dealModel(GlobalDefinitions[tempkey], GlobalDefinitions, tempkey);
+        let tempkey = utils.queryData(mockJsonKey);
+        mockJson = modelJS.dealModel(GlobalDefinitions[tempkey], GlobalDefinitions, tempkey);
     } else {
         let model = schema ? schema : typecontent.responses['200'];
-        mockJson = dealModel(model, GlobalDefinitions);
+        mockJson = modelJS.dealModel(model, GlobalDefinitions);
     }
-    makeJsonFile(mockJson, pathkey, typekey); //只有json生成完成后才会将服务启动
+    makeJsonFile(mockJson, jsonFileName, typekey, url); //只有json生成完成后才会将服务启动
 }
 
 //生成json文件
-function makeJsonFile(jsonData, pathkey, typekey) {
+function makeJsonFile(jsonData, fileName, typekey, url) {
     let content = utils.toStr(jsonData);
-    let jsonFileName = `${pathkey}.json`;
+    let jsonFileName = `${fileName}.json`;
     let filePath = pathDeal.join2(process.cwd(), Config.mockDirName, jsonFileName);
 
     //此处需要用成功或者失败的回调，所以用异步，异步才有回调
     let makeFilePromise = file.makeFile(filePath, content).then(() => {
         //文件生成成功后，像express中插入服务
         SucCounter++;
-        createServer(pathkey, filePath, typekey)
+        serverJS.createServer(url, filePath, typekey)
     }, (err) => {
         ErrorCounter++;
-        errorUrls.push(pathkey);
+        errorUrls.push(url);
         utils.error(err);
     });
     MakeFilePromiseArray.push(makeFilePromise); //此处
 }
-
-//处理数据模型
-function dealModel(definitions, GlobalDefinitions, prevKey) {
-    let result = {};
-    let type = definitions && definitions.type ? definitions.type : '';
-    if (type) {
-        if (type == 'string') {
-            result = 'string';
-        }
-        if (type == 'integer') {
-            result = 0;
-        }
-        if (type == 'boolean') {
-            result = false;
-        }
-        if (type == 'object') {
-            if (definitions.properties) {
-                result = definitions.properties;
-                for (let key in result) {
-                    //防止递归数据造成死循环
-                    if (result[key].type && result[key].type == 'array' && result[key].items['$ref'] && (queryData(result[key].items['$ref']) == prevKey)) {
-                        result[key] = {};
-                    } else {
-                        result[key] = dealModel(result[key], GlobalDefinitions, key);
-                    }
-
-                }
-            } else {
-                result = {};
-            }
-        }
-        if (type == 'array') {
-            let items = definitions.items;
-            if (items.type) {
-                dealModel(items, GlobalDefinitions);
-            } else {
-                let objkey = queryData(definitions.items['$ref']);
-                //防止递归数据造成死循环
-                if (objkey != prevKey) {
-                    result = [dealModel(GlobalDefinitions[objkey], GlobalDefinitions, objkey)];
-                } else {
-                    result = {};
-                }
-
-            }
-
-        }
-    } else {
-        let goObject = definitions['$ref'] ? definitions['$ref'] : '';
-        if (goObject) {
-            let objkey = queryData(goObject);
-            result = dealModel(GlobalDefinitions[objkey], GlobalDefinitions);
-        } else {
-            result = 'OK';
-        }
-
-    }
-    return result;
-}
-
-
-
-//数据查找路径
-function queryData(hash) {
-    let result = '';
-    result = (hash.substring(2, hash.length)).split('/');
-    return result[1];
-}
-
 
 module.exports = {
     init: init

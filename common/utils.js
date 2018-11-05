@@ -1,14 +1,18 @@
-//日志打印
+/** 
+ * 工具
+ * author: liaoyanli
+ */
+
 function log(msg) {
     console.log(msg);
 };
 //警告打印
 function warn(msg) {
-    console.log(msg)
+    console.log(`warn:${msg}`);
 };
 
 function error(msg) {
-    console.log(msg);
+    console.log(`error:${msg}`);
 };
 
 //将buffer或者字符串转换成json串
@@ -28,11 +32,19 @@ function dealUrl(url) {
         return `:${key}`;
     }); //此正则很重要
 }
+
+//数据查找路径，针对swagger返回数据的特殊处理
+function queryData(hash) {
+    let result = '';
+    result = (hash.substring(2, hash.length)).split('/');
+    return result[1];
+}
 module.exports = {
     warn,
     log,
     toJson,
     toStr,
     error,
-    dealUrl
+    dealUrl,
+    queryData
 }

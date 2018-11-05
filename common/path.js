@@ -1,3 +1,7 @@
+/** 
+ * path
+ * author: liaoyanli
+ */
 let path = require('path');
 
 function join(a, b) {
