@@ -17,8 +17,6 @@ function createServer(url, mockDir, type) {
     let requreMockJson = require(mockDir);
     let realUrl = utils.dealUrl(url);
 
-    console.log(realUrl);
-    console.log(type);
     app[type](realUrl, function(req, res) {
         utils.log('请求时间：' + new Date());
         utils.log('请求路径：' + url);

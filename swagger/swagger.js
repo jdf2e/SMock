@@ -42,6 +42,8 @@ function getJsonData() {
 
 //数据请求回调
 function getJsonCallback(res) {
+    utils.log(`状态码: ${res.statusCode}`);
+    utils.log(`响应头: ${JSON.stringify(res.headers)}`);
     res.setEncoding('utf8');
     if (res.statusCode != 200) {
         utils.error('请检查配置是否设置正确！');

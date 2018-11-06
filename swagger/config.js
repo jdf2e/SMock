@@ -5,7 +5,7 @@
 //默认参数
 let defaultConfig = {
     host: '', //接口文档ip
-    hostname: '', //接口文档域名
+    domain: '', //接口文档域名
     port: 80, //接口文档端口
     path: '/v2/api-docs',
     method: 'GET',
@@ -17,9 +17,9 @@ let defaultConfig = {
 
 //处理参数
 function dealConfig(c) {
-    if (c.hostname) {
+    if (c.domain) {
         c.headers = {
-            host: c.hostname
+            host: c.domain
         };
     }
     if (c.customProtocol == 'https') {

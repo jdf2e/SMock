@@ -4,7 +4,7 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const tpl = require('jdcfe-smock/lib/createTpl/urlTpl');
+const tpl = require('./urlTpl');
 const types = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'];
 
 class SwaggerMock {
