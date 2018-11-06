@@ -1,6 +1,6 @@
 {
     "name": "jdcfe-smock",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "description": "分析Swagger文档，输出相应的mock数据，并启动node服务，供前端开发时调试使用，提高前端开发效率",
     "main": "index.js",
     "bin": {
