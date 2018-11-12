@@ -3,7 +3,7 @@
 </div>
 
 ## 简介
->分析需要mock的文档，例如swagger文档，输出相应的mock数据，并启动node服务，供前端开发时调试使用，提高前端开发效率，支持跨域访问
+分析需要mock的文档，例如swagger文档，输出相应的mock数据，并启动node服务，供前端开发时调试使用，提高前端开发效率，支持跨域访问
 
 <video src="https://jdvod.300hu.com/4c1f7a6atransbjngwcloud1oss/1610597a113300169256079361/v.f30.mp4" width="750" height="640" controls="controls">
 Your browser does not support the video tag.
