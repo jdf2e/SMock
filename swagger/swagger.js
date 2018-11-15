@@ -188,11 +188,11 @@ function makeMockJson(jsonFileName, typecontent, typekey, url) {
         let model = schema ? schema : typecontent.responses['200'];
         mockJson = modelJS.dealModel(model, GlobalDefinitions);
     }
-    makeJsonFile(mockJson, jsonFileName, typekey, url); //只有json生成完成后才会将服务启动
+    makeJsonFile(mockJson, jsonFileName, typekey, url,typecontent); //只有json生成完成后才会将服务启动
 }
 
 //生成json文件
-function makeJsonFile(jsonData, fileName, typekey, url) {
+function makeJsonFile(jsonData, fileName, typekey, url,typecontent) {
     let content = utils.toStr(jsonData);
     let jsonFileName = `${fileName}.json`;
     let filePath = pathDeal.join2(process.cwd(), Config.mockDirName, jsonFileName);
@@ -201,7 +201,7 @@ function makeJsonFile(jsonData, fileName, typekey, url) {
     let makeFilePromise = file.makeFile(filePath, content).then(() => {
         //文件生成成功后，像express中插入服务
         SucCounter++;
-        serverJS.createServer(url, filePath, typekey)
+        serverJS.createServer(url, filePath, typekey,typecontent)
     }, (err) => {
         ErrorCounter++;
         errorUrls.push(url);

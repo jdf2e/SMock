@@ -15,7 +15,7 @@ function runServer(port, cal) {
 }
 
 //创建server链接
-function createServer(url, mockDir, type) {
+function createServer(url, mockDir, type,typecontent) {
     let requreMockJson = require(mockDir);
     let realUrl = utils.dealUrl(url);
 
