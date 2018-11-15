@@ -12,7 +12,7 @@ npm install jdcfe-smock -g
 ### 初始化SMock.json文件
 
 <p>
-1. 在对应的项目根目录下执行s2 init命令<br>
+1. 在对应的项目根目录下执行smock init命令<br>
 2. 按照提示输入相应的配置，如果不知道请一路填空<br>
 3. 检查SMock.json里的配置是否正确<br>
 </p>
@@ -33,7 +33,7 @@ npm install jdcfe-smock -g
 ### 运行
 
 <p>
-1. 在项目根目录下执行s2 run<br>
+1. 在项目根目录下执行smock run<br>
 2. 在项目中调用mock服务<br>
 </p>
 
