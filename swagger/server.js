@@ -3,6 +3,8 @@
  * author: liaoyanli
  */
 let utils = require('jdcfe-smock/common/utils');
+let paramsNumRule = require('./../common/param-num-rule');
+let paramsTypeRule = require('./../common/param-type-rule');
 let express = require('express');
 let app = express();
 //待所有mock的json文件创建或者修改完成后，再启动server
@@ -32,7 +34,15 @@ function createServer(url, mockDir, type) {
         res.header("X-Powered-By", ' 3.2.1')
         res.header("Content-Type", "application/json;charset=utf-8");
         // res.send(req.query.callback + '(' + JSON.stringify(requreMockJson) + ');');
+
+        // if () { //验证参数个数
+        //     res.send('缺少必输参数');
+        // } else if () {
+        //     res.send('参数类型不正确')
+        // } else {
         res.send(JSON.stringify(requreMockJson));
+        // }
+
     });
 }
 
