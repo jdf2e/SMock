@@ -42,6 +42,8 @@ function createServer(url, mockDir, type, typecontent, GlobalDefinitions) {
         // res.send(req.query.callback + '(' + JSON.stringify(requreMockJson) + ');');
 
         //验证参数个数
+        typecontent.parameters = typecontent.parameters || [];
+
         let parametersArr = typecontent.parameters,
             urlParameArr = Object.keys(params),
             requiredParamsArr = [];
