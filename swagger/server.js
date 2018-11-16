@@ -3,8 +3,8 @@
  * author: liaoyanli
  */
 let utils = require('jdcfe-smock/common/utils');
-let paramsNumRule = require('./../common/param-num-rule');
-let paramsTypeRule = require('./../common/param-type-rule');
+let paramsNumRule = require('jdcfe-smock/swagger/param-num-rule');
+let paramsTypeRule = require('jdcfe-smock/swagger/param-type-rule');
 let express = require('express');
 var bodyParser = require("body-parser");
 let app = express();
@@ -47,7 +47,7 @@ function createServer(url, mockDir, type, typecontent, GlobalDefinitions) {
         let parametersArr = typecontent.parameters,
             urlParameArr = Object.keys(params),
             requiredParamsArr = [];
-        
+
         var isInQuery = parametersArr.some(function(item) {
             return item.in === 'query';
         })
@@ -56,8 +56,8 @@ function createServer(url, mockDir, type, typecontent, GlobalDefinitions) {
             item.required && requiredParamsArr.push(item.name);
         });
 
-        if(isInQuery) {            
-            if (!paramsNumRule.isInclude(requiredParamsArr, urlParameArr)) { 
+        if (isInQuery) {
+            if (!paramsNumRule.isInclude(requiredParamsArr, urlParameArr)) {
                 res.send('缺少必输参数');
                 return;
             }
