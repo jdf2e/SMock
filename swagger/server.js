@@ -48,8 +48,8 @@ function createServer(url, mockDir, type, typecontent, GlobalDefinitions) {
             urlParameArr = Object.keys(params),
             requiredParamsArr = [];
 
-        var isNotBody = parametersArr.some(function(item) {
-            return item.in === 'query' || item.in === 'formData';
+        let isNotBody = parametersArr.some(function(item) {
+            return item.in !== 'body';
         })
 
         parametersArr.forEach(item => {
