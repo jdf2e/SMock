@@ -41,10 +41,26 @@ function createServer(url, mockDir, type, typecontent, GlobalDefinitions) {
         res.header("Content-Type", "application/json;charset=utf-8");
         // res.send(req.query.callback + '(' + JSON.stringify(requreMockJson) + ');');
 
-        if (false) { //验证参数个数
-            res.send('缺少必输参数');
-            return;
+        //验证参数个数
+        let parametersArr = typecontent.parameters,
+            urlParameArr = Object.keys(params),
+            requiredParamsArr = [];
+        
+        var isInQuery = parametersArr.some(function(item) {
+            return item.in === 'query';
+        })
+
+        parametersArr.forEach(item => {
+            item.required && requiredParamsArr.push(item.name);
+        });
+
+        if(isInQuery) {            
+            if (!paramsNumRule.isInclude(requiredParamsArr, urlParameArr)) { 
+                res.send('缺少必输参数');
+                return;
+            }
         }
+
         if (!paramsTypeRule.validate(params, typecontent.parameters, GlobalDefinitions)) {
             res.send('有参数类型不正确，请查看服务台日志');
             return;
