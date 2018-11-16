@@ -18,13 +18,12 @@ function validate(params, rules, GlobalDefinitions) {
     for (let key in params) {
         let arr = [];
         let paramType = typeof params[key];
-
-
         if (rules && (rules.length > 0)) {
+
             //入参为query类型
-            if (rules[0].in == 'query') {
+            if (rules[0].in == 'query' || rules[0].in == 'formData') {
                 arr = rules.filter((item) => {
-                    return (item.name == key) && (item.in == 'query');
+                    return (item.name == key) && (item.in == 'query' || rules[0].in == 'formData');
                 });
                 if (arr.length > 0) {
                     if (paramType == 'object' || paramType == 'function' || paramType == 'undefined') {
