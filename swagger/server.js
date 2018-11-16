@@ -48,8 +48,8 @@ function createServer(url, mockDir, type, typecontent, GlobalDefinitions) {
             urlParameArr = Object.keys(params),
             requiredParamsArr = [];
 
-        var isNotBody = parametersArr.some(function(item) {
-            return item.in === 'query' || item.in === 'formData';
+        let isNotBody = parametersArr.some(function(item) {
+            return item.in !== 'body';
         })
 
         parametersArr.forEach(item => {
@@ -58,7 +58,7 @@ function createServer(url, mockDir, type, typecontent, GlobalDefinitions) {
 
         if (isNotBody) {
             if (!paramsNumRule.isInclude(requiredParamsArr, urlParameArr)) {
-                res.send('缺少必输参数');
+                res.send('缺少必输参数，请查看服务台日志');
                 return;
             }
         }
