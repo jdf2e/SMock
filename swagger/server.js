@@ -58,7 +58,7 @@ function createServer(url, mockDir, type, typecontent, GlobalDefinitions) {
 
         if (isNotBody) {
             if (!paramsNumRule.isInclude(requiredParamsArr, urlParameArr)) {
-                res.send('缺少必输参数');
+                res.send('缺少必输参数，请查看服务台日志');
                 return;
             }
         }
