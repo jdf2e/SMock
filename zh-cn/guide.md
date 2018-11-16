@@ -5,7 +5,7 @@
 ## 简介
 >分析需要mock的文档，例如swagger文档，输出相应的mock数据，并启动node服务，供前端开发时调试使用，提高前端开发效率，支持跨域访问
 
-<video src="https://jdvod.300hu.com/4c1f7a6atransbjngwcloud1oss/1610597a113300169256079361/v.f30.mp4" width="100%" controls="controls">
+<video src="https://jdvod.300hu.com/4c1f7a6atransbjngwcloud1oss/1610597a113300169256079361/v.f30.mp4" width="100%" height="640" controls="controls">
 Your browser does not support the video tag.
 </video>
 
@@ -22,25 +22,16 @@ npm install jdcfe-smock -g
 ```bash
 smock init
 ```
-```bash
-$ smock init
-需要mock的Swagger文档IP或者域名(host):
-需要mock的文档域名(domain):
-你给所用到的mock服务项目的命名(projectName):
-启动超级变换形态~
-{ host: '', domain: '', projectName: '' }
-```
-<img src="//img12.360buyimg.com/uba/jfs/t27817/7/1745351468/17468/23826047/5bea936cN39e244d0.png" alt="">
+<img src="//img30.360buyimg.com/uba/jfs/t1/3524/29/8582/115957/5ba9fb4dEc4b4bc92/1a959e4c729ffb8e.png" alt="">
+
 2. 按照提示输入相应的配置，如果不知道请一路填空，init命令执行完成后，所在项目会自动生成一个名为SMock.json的配置文件<br>
-<img src="//img14.360buyimg.com/uba/jfs/t26353/242/1671751559/2877/435f7d9d/5bea9438Nde36a4cd.png" alt="">
-3. 检查SMock.json里的配置是否正确，如果默认配置项不够，可阅读下面的配置参数说明表格，并添加配置项<br>
-```json
-{
-	"host": "",
-	"domain": "",
-	"projectName": ""
-}
-```
+   
+<img src="//img30.360buyimg.com/uba/jfs/t1/237/40/8780/85097/5ba9fb4dE3c9a3211/f3c1245569a0d899.png" alt="">
+
+3. 检查SMock.json里的配置是否正确，如果默认配置项不够，可阅读下面的配置参数说明表格，并添加配置项  todo哪些是必传的<br>
+
+<img src="//img20.360buyimg.com/uba/jfs/t1/2404/26/8621/86299/5ba9fc51Ed55709cc/7ff83d96cf6a48f3.png" alt="">
+
 4. 启动服务 todo哪些是必传的
 ```bash
 smock run
@@ -53,7 +44,7 @@ smock run
 访问如下形式的host地址，即可看到模拟数据,端口默认为3000，可配置为其他值。如下链接所示：<br>
 http://127.0.0.1:3000/xxx/xxx/xxx.do/
 
-<img src="//img30.360buyimg.com/uba/jfs/t27349/141/1755062058/26407/e81f9280/5beabea2Nfbb4943b.png" alt=""><br>
+<img src="//img11.360buyimg.com/uba/jfs/t1/1890/5/8717/227920/5ba9fb4dE96cf8785/22ebc27582f91df8.png" alt=""><br>
 所有的接口路径请求，都生成在${projectName}/urlsReal.js里，可直接应用于项目中作为请求后台数据的链接使用。<br>
 ```js
 (function (global, factory) {
@@ -76,12 +67,11 @@ http://127.0.0.1:3000/xxx/xxx/xxx.do/
 })))
 ```
 
-
 ## 配置文件
 >通过快速开始我们默认生成了配置文件，这里提供了对配置文件参数的描述，满足使用者在不同情况下的需求
 
 ### 文件格式
- .json文件<br>
+- .json<br>
 例如：
 ```
 SMock.json
@@ -112,3 +102,26 @@ smock run
 
 ### 模板说明
 所有的接口路径请求，都生成在${projectName}/urlsReal.js里,并且可以通过在访问链接里配置isDebug关键字来切换访问后端线上和测试的环境
+
+```
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+    typeof define === 'function' && define.amd ? define(['exports'], factory) :
+    (factory((global.SMOCK = {})));
+}(this, (function(exports) { 'use strict';
+    var isDebug = (window.location.href).indexOf('debug') > -1;
+    var host = isDebug?'127.0.0.1:4000':'111.206.228.111';
+    var url = {
+        'sayHiUsingGET': {
+            url: host + '/hi',
+            type: 'get'
+        },    
+    }
+    exports.idDebug = isDebug;
+    exports.host = host;
+    exports.url = url;
+
+    Object.defineProperty(exports, '__esModule', { value: true });
+
+})))
+```
