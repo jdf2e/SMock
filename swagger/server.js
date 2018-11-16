@@ -48,15 +48,15 @@ function createServer(url, mockDir, type, typecontent, GlobalDefinitions) {
             urlParameArr = Object.keys(params),
             requiredParamsArr = [];
 
-        var isInQuery = parametersArr.some(function(item) {
-            return item.in === 'query';
+        var isNotBody = parametersArr.some(function(item) {
+            return item.in === 'query' || item.in === 'formData';
         })
 
         parametersArr.forEach(item => {
             item.required && requiredParamsArr.push(item.name);
         });
 
-        if (isInQuery) {
+        if (isNotBody) {
             if (!paramsNumRule.isInclude(requiredParamsArr, urlParameArr)) {
                 res.send('缺少必输参数');
                 return;
