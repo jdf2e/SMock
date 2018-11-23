@@ -24,6 +24,7 @@
         "body-parser": "^1.18.3",
         "commander": "^2.19.0",
         "express": "^4.16.3",
+        "mockjs": "^1.0.1-beta3",
         "request": "^2.87.0"
     }
 }

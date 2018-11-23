@@ -3,6 +3,7 @@
  * author: liaoyanli
  */
 let utils = require('./../common/utils');
+let mockjs = require('./../common/mockjs');
 
 //递归替换
 function dealModel(definitions, GlobalDefinitions, prevKey) {
@@ -10,13 +11,13 @@ function dealModel(definitions, GlobalDefinitions, prevKey) {
     let type = definitions && definitions.type ? definitions.type : '';
     if (type) {
         if (type == 'string') {
-            result = 'string';
+            result = mockjs.setString();
         }
         if (type == 'integer') {
-            result = 0;
+            result = mockjs.setInteger();
         }
         if (type == 'boolean') {
-            result = false;
+            result = mockjs.setBoolean();
         }
         if (type == 'object') {
             if (definitions.properties) {
@@ -56,7 +57,7 @@ function dealModel(definitions, GlobalDefinitions, prevKey) {
             let objkey = utils.queryData(goObject);
             result = dealModel(GlobalDefinitions[objkey], GlobalDefinitions);
         } else {
-            result = 'OK';
+            result = mockjs.setString();
         }
 
     }
