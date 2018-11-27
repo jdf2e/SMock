@@ -1,0 +1,14 @@
+{
+    "presets": [
+        ["env",
+        {
+            "targets":{
+                "ios": "7.0",
+                "android": "4.0",
+                "browsers": ["> 2%"]
+            },
+            "useBuiltIns": true
+        }]
+    ],
+    "plugins": ["syntax-dynamic-import"]
+}
