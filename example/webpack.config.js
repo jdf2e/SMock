@@ -9,7 +9,7 @@ var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 // var Carefree = require('@nutui/carefree');
-var HelloWorldPlugin = require('.');
+var Smock=require('Smock-webpack-plugin');
 
 
 var webpackConfig = module.exports = {};
@@ -113,7 +113,7 @@ webpackConfig.plugins = [
     //     //     target: '/home/fe/carefree-test/'
     //     // }
     // })
-    new HelloWorldPlugin({
+    new Smock({
         host:'111.206.228.111',
         domain:'kudou-staff-m-fy.jd.com',
         projectName:'test'
