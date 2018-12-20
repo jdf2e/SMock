@@ -80,29 +80,39 @@ SMock.json
 ### 配置项
 |属性名|类型|描述
 |---|---|---|
-|host| string| 需要mock的文档地址ip或者域名
-|domain|string| 需要mock的文档访问域名。一般和host配合使用，如果文档是IP不能直接访问的形式，那么此处需要传入相应的值
-|path|string| 需要mock的文档数据请求路径，在swagger文档页面可以找到，如：/v2/api-docs
+|host| String| 需要mock的文档地址ip或者域名
+|domain|String| 需要mock的文档访问域名。一般和host配合使用，如果文档是IP不能直接访问的形式，那么此处需要传入相应的值
+|path|String| 需要mock的文档数据请求路径，在swagger文档页面可以找到，如：/v2/api-docs
 |port| integer| 需要mock的文档地址端口号， 默认80，如果协议配置为https，此参数则变为443
-|projectName| string| 项目名，默认值swaggermock
-|mockPort| string| 本地mock服务启动后的端口，默认为3000
-|customProtocol| string| swagger文档支持的协议请求 http/https
+|jsPath| String| 程序运行起来之后自动生成URL整合文件的输入路径
+|projectName| String| 项目名，默认值swaggermock
+|mockPort| String| 本地mock服务启动后的端口，默认为3000
+|customProtocol| String| swagger文档支持的协议请求 http/https
+
+### SMock命令文档
+| 命令文档 | 描述
+| ---| ---
+| smock init | 初始化SMock的配置文件，可快速配置SMock的必填参数，并创建创实话文件。
+| smock run | 启动SMock服务，并抓取接口URL输出到jsPath配置的路径下。
+| smock -version | 现在SMock版本号
+| smock -help | 展示SMock帮助文档
 
 ## 生成的模板
 ### 运行
 
-在项目根目录下执行 
+启动SMock没有位置限制，可在项目根目录下也可在任何路径启动，执行以下命令：
 
 ```bash
 smock run
 ```
 <img src="http://img13.360buyimg.com/uba/jfs/t26611/110/1585181953/26635/35b59371/5be6858cNc1bc63df.png" alt="">
 
-如上图启动的服务host和请求链接，例如：http://127.0.0.1:3000/xxx/xxx/xxx.do ,这样就可以请求到swagger中配置的数据了。
+如上图启动的服务host和请求链接，例如：http://127.0.0.1:3000/xxx/xxx/xxx.do ,这样就可以直接请求swagger中配置的数据。
 
 ### 模板说明
-所有的接口路径请求，都生成在${projectName}/urlsReal.js里,并且可以通过在访问链接里配置isDebug关键字来切换访问后端线上和测试的环境
+所有的接口路径请求，都生成在${projectName}/urlsReal.js里,并且可以通过在访问链接里配置isDebug关键字来切换访问后端线上和测试的环境，生成的urlsReal.js文件可以通过jsPath来指定输出的位置，如配置输出路径不会影响demo文件夹下urlsReal的完整性。
 
+具体urlsReal.js文件格式如下：
 ```
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -124,4 +134,37 @@ smock run
     Object.defineProperty(exports, '__esModule', { value: true });
 
 })))
+```
+导出的URL提供了一下三个参数：
+- isDebug： 是否为测试环境。
+- host： 当前使用的host，根据isdebug来动态变换。
+- url: 整个系统中所有的url数据：
+
+    每个url数据对象包括：
+    - url：接口使用的API
+    - type: 接口的请求类型
+
+## Webpack插件
+
+当前项目技术选型vue与React偏多，并且依赖于Webpack，因SMock也会启动服务，所以我们把SMock与Webpack进行了整合，使其启动的服务并入到Webpack服务中，保证了项目只需要开启一个服务即可。
+
+### 安装webpack插件
+
+```javascript
+npm install smock-webpack-plugin --save-dev
+```
+
+### Webpack中使用
+
+引入之后，直接配置参数即可，参数具体可参考SMock的参数介绍，内容一致。
+```javascript
+const Smock = require('smock-webpack-plugin');
+ 
+plugins: [
+    new Smock({
+        host:'',
+        domain:'',
+        projectName:''
+    })
+]
 ```
