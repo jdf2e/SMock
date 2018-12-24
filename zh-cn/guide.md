@@ -88,12 +88,14 @@ SMock.json
 |projectName| String| 项目名，默认值swaggermock
 |mockPort| String| 本地mock服务启动后的端口，默认为3000
 |customProtocol| String| swagger文档支持的协议请求 http/https
+|override| boolean|是否每次启动服务都覆盖原有json数据文件，默认为false，不覆盖
 
 ### SMock命令文档
 | 命令文档 | 描述
 | ---| ---
 | smock init | 初始化SMock的配置文件，可快速配置SMock的必填参数，并创建创实话文件。
 | smock run | 启动SMock服务，并抓取接口URL输出到jsPath配置的路径下。
+| smock run -o| 启动SMock服务，并抓取接口URL输出到jsPath配置的路径下，不管配置项中的override配置为任何值，在启动服务之前强制覆盖所有的模拟文件数据。
 | smock -version | 现在SMock版本号
 | smock -help | 展示SMock帮助文档
 
