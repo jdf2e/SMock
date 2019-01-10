@@ -1,10 +1,10 @@
 {
   "name": "smock-webpack-plugin",
   "description": "smock-webpack-plugin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "王悦",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "smock-core": ""
-  }
+  },
+  "devDependencies": {}
 }
