@@ -1,4 +1,4 @@
-let smockCore=require('smock-core');
+let Core=require('smock-core').Core;
 class Smock {
     constructor(options) {
       this.options = options;
@@ -6,13 +6,13 @@ class Smock {
     apply(compiler) {
         if(compiler.hooks){
           compiler.hooks.done.tap('Smock', () => {
-            smockCore.init(
+            new Core(
               this.options
             ); 
           });
         }else{
           compiler.plugin('done',() => {
-            smockCore.init(
+            new Core(
               this.options
             ); 
           })
