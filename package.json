@@ -1,6 +1,6 @@
 {
     "name": "jdcfe-smock",
-    "version": "1.1.7",
+    "version": "1.1.9",
     "description": "分析Swagger文档，输出相应的mock数据，并启动node服务，供前端开发时调试使用，提高前端开发效率",
     "main": "index.js",
     "bin": {
@@ -26,6 +26,6 @@
         "express": "^4.16.3",
         "mockjs": "^1.0.1-beta3",
         "request": "^2.87.0",
-        "smock-core": "0.0.1"
+        "smock-core": ""
     }
 }

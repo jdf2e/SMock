@@ -28,12 +28,12 @@ npm install jdcfe-smock -g
 |projectName| string| 项目名，默认值swaggermock
 |mockPort| string| 本地mock服务启动后的端口，默认为3000
 |customProtocol| string| swagger文档支持的协议请求 http/https
-
+|override| boolean| 是否每次启动服务都覆盖原有json数据文件，默认为false，不覆盖
 
 ### 运行
 
 <p>
-1. 在项目根目录下执行smock run<br>
+1. 在项目根目录下执行smock run，也可以执行smock run -o，此种情况表示更新所有的模拟数据，请谨慎操作。<br>
 2. 在项目中调用mock服务<br>
 </p>
 

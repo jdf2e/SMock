@@ -1,3 +1,4 @@
 node_modules/
 *mock/
 SMock.json
+.DS_Store
