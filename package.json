@@ -4,7 +4,7 @@
   "version": "1.0.4",
   "author": "王悦",
   "dependencies": {
-    "smock-core": ""
+    "smock-core": "^2.0.0"
   },
   "devDependencies": {}
 }
