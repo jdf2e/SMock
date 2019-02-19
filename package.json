@@ -1,7 +1,7 @@
 {
   "name": "smock-webpack-plugin",
   "description": "smock-webpack-plugin",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "author": "王悦",
   "dependencies": {
     "smock-core": "^2.0.0"
