@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>JDCFE SMock</h1>
+  <h1>JDCFE SMock 2.0.0</h1>
 </div>
 
 ## 简介
@@ -8,6 +8,9 @@
 <video src="https://jdvod.300hu.com/4c1f7a6atransbjngwcloud1oss/1610597a113300169256079361/v.f30.mp4" width="100%" height="640" controls="controls">
 Your browser does not support the video tag.
 </video>
+
+## 工作原理
+
 
 ## 快速开始
 
@@ -78,24 +81,26 @@ SMock.json
 ```
 
 ### 配置项
-|属性名|类型|描述
-|---|---|---|
-|host| String| 需要mock的文档地址ip或者域名
-|domain|String| 需要mock的文档访问域名。一般和host配合使用，如果文档是IP不能直接访问的形式，那么此处需要传入相应的值
-|path|String| 需要mock的文档数据请求路径，在swagger文档页面可以找到，如：/v2/api-docs
-|port| integer| 需要mock的文档地址端口号， 默认80，如果协议配置为https，此参数则变为443
-|jsPath| String| 程序运行起来之后自动生成URL整合文件的输入路径
-|projectName| String| 项目名，默认值swaggermock
-|mockPort| String| 本地mock服务启动后的端口，默认为3000
-|customProtocol| String| swagger文档支持的协议请求 http/https
-|override| boolean|是否每次启动服务都覆盖原有json数据文件，默认为false，不覆盖
+| 属性名 | 类型 | 描述 | 默认值
+| --- | --- | --- | --- |
+| type | String | 文档数据源类型，暂只支持swagger | swagger |
+| docPath | String | type为swagger时，swagger文档访问路径 | - |
+| docPort | Number | type为swagger时，swagger的文档端口号 | 80 |
+| path | String | type为swagger时，swagger模式接口路径 | /v2/api-docs |
+| method | String | type为swagger时，文档数据请求方式 | GET |
+| realHostName | String | 项目上线后访问的真实域名 | - |
+| mockPort | Number | 启动服务的端口号 | 3000 |
+| customProtocol | String | type为swagger时，具体文档服务器协议http或https | http |
+| headers | Object | 创建本地服务器时接口header附加参数 | - |
+| jsPath | String | 创建服务器时抽取Url路径文件的存储路径 | - |
+| descInclude | Array | 调用接口时展示接口文档的白名单 | - |
+| override | Boolean | 重启服务时是否重新刷新数据 | false |
 
 ### SMock命令文档
 | 命令文档 | 描述
 | ---| ---
 | smock init | 初始化SMock的配置文件，可快速配置SMock的必填参数，并创建创实话文件。
 | smock run | 启动SMock服务，并抓取接口URL输出到jsPath配置的路径下。
-| smock run -o| 启动SMock服务，并抓取接口URL输出到jsPath配置的路径下，不管配置项中的override配置为任何值，在启动服务之前强制覆盖所有的模拟文件数据。
 | smock -version | 现在SMock版本号
 | smock -help | 展示SMock帮助文档
 
