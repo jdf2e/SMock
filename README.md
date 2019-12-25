@@ -19,16 +19,16 @@ npm install jdcfe-smock -g
 
 ### 参数说明
 
-|Attributes|forma|describe
-|---|---|---|
-|host| string| 需要mock的文档地址ip或者域名
-|domain|string| 需要mock的文档访问域名。一般和host配合使用，如果文档是IP不能直接访问的形式，那么此处需要传入相应的值
-|path|string| 需要mock的文档数据请求路径，在swagger文档页面可以找到，如：/v2/api-docs
-|port| integer| 需要mock的文档地址端口号， 默认80，如果协议配置为https，此参数则变为443
-|projectName| string| 项目名，默认值swaggermock
-|mockPort| string| 本地mock服务启动后的端口，默认为3000
-|customProtocol| string| swagger文档支持的协议请求 http/https
-|override| boolean| 是否每次启动服务都覆盖原有json数据文件，默认为false，不覆盖
+| Attributes     | forma   | describe                                                                                             |
+| -------------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| host           | string  | 需要mock的文档地址ip或者域名                                                                         |
+| domain         | string  | 需要mock的文档访问域名。一般和host配合使用，如果文档是IP不能直接访问的形式，那么此处需要传入相应的值 |
+| path           | string  | 需要mock的文档数据请求路径，在swagger文档页面可以找到，如：/v2/api-docs                              |
+| port           | integer | 需要mock的文档地址端口号， 默认80，如果协议配置为https，此参数则变为443                              |
+| projectName    | string  | 项目名，默认值swaggermock                                                                            |
+| mockPort       | string  | 本地mock服务启动后的端口，默认为3000                                                                 |
+| customProtocol | string  | swagger文档支持的协议请求 http/https                                                                 |
+| override       | boolean | 是否每次启动服务都覆盖原有json数据文件，默认为false，不覆盖                                          |
 
 ### 运行
 
@@ -50,3 +50,8 @@ http://127.0.0.1:3000/xxx/xxx/xxx.do
 <p>
 所有的接口路径请求，都生成在${projectName}/urlsReal.js里
 </p>
+
+
+项目更新：
+
+为了便于项目扩展，现将核心逻辑放在core分支开发。dev中调用非核心功能。
