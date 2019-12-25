@@ -1,0 +1,22 @@
+.w {
+  width: 990px;
+  margin: 0 auto; }
+
+.search input {
+  height: 40px;
+  width: 300px;
+  text-indent: 10px;
+  outline: none; }
+
+.tb {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse; }
+  .tb th:nth-child(1) {
+    width: 200px; }
+  .tb th, .tb tr {
+    height: 40px; }
+  .tb th {
+    background: #f8f8f8; }
+  .tb td, .tb th {
+    border-bottom: 1px solid #ccc; }

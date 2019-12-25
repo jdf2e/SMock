@@ -4,23 +4,17 @@
  */
 let Mock = require('mockjs');
 var Random = Mock.Random;
-function setString() {
+export function setString() {
     Random.word(3, 8);
     return Mock.mock('@word(3, 8)');
 }
 
-function setBoolean() {
+export function setBoolean() {
     Random.boolean();
     return Mock.mock('@boolean');
 }
 
-function setInteger() {
+export function setInteger() {
     Random.integer(1, 100);
     return Mock.mock('@integer(1, 100)')
-}
-
-module.exports = {
-    setString,
-    setBoolean,
-    setInteger
 }

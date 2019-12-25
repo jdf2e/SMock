@@ -1,14 +1,16 @@
 {
-    "name": "jdcfe-smock",
-    "version": "2.0.1",
-    "description": "分析Swagger文档，输出相应的mock数据，并启动node服务，供前端开发时调试使用，提高前端开发效率",
-    "main": "index.js",
-    "bin": {
-        "smock": "./bin/smock.js"
-    },
+    "name": "smock-core",
+    "version": "2.0.5",
+    "description": "SMock核心源码",
+    "main": "./dist/main",
     "repository": {
         "type": "git",
         "url": "https://github.com/jdf2e/SMock.git"
+    },
+    "scripts": {
+        "test": "jest --config=jest.config.json",
+        "dev": "cross-env NODE_ENV=development gulp",
+        "build": "gulp"
     },
     "keywords": [
         "swagger",
@@ -21,11 +23,32 @@
     "author": "jdc-fe",
     "license": "MIT",
     "dependencies": {
+        "@types/axios": "^0.14.0",
         "body-parser": "^1.18.3",
-        "commander": "^2.19.0",
+        "clone": "^2.1.2",
         "express": "^4.16.3",
-        "mockjs": "^1.0.1-beta3",
-        "request": "^2.87.0",
-        "smock-core": ""
+        "mockjs": "^1.0.1-beta3"
+    },
+    "devDependencies": {
+        "gulp": "^4.0.0",
+        "typescript": "^3.2.2",
+        "gulp-uglify-es": "^1.0.4",
+        "gulp-typescript": "^5.0.0",
+        "@types/jest": "^23.3.12",
+        "@types/request": "^2.48.1",
+        "@types/request-promise-native": "^1.0.15",
+        "babel-env": "^2.4.1",
+        "babel-jest": "^23.6.0",
+        "child_process": "^1.0.2",
+        "cross-env": "^5.2.0",
+        "gulp-babel": "^8.0.0",
+        "gulp-rename": "^1.4.0",
+        "gulp-sass": "^4.0.2",
+        "jest": "^23.6.0",
+        "node-sass": "^4.11.0",
+        "regenerator-runtime": "^0.13.1",
+        "request": "^2.88.0",
+        "request-promise-native": "^1.0.5",
+        "ts-jest": "^23.10.5"
     }
 }

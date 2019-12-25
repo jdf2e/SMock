@@ -1,52 +1,56 @@
+
+
 <div align="center">
-  <h1>JDCFE SMock</h1>
-  <p>分析需要mock的文档，例如swagger文档，输出相应的mock数据，并启动node服务，供前端开发时调试使用，提高前端开发效率，支持跨域访问</p>
+  <h1>smock-core</h1>
+  <p>SMock的核心代码，smock run的主要逻辑</p>
 </div>
+
+### 版本命名规范
+  采用银河系九大行星的顺序来命名。
+- 1.0->mercury
+- 2.0->venus
 
 ### 安装
 
 ```bash
-npm install jdcfe-smock -g
+npm install smock-core --save-dev
 ```
 
-### 初始化SMock.json文件
+### 调用
 
-<p>
-1. 在对应的项目根目录下执行smock init命令<br>
-2. 按照提示输入相应的配置，如果不知道请一路填空<br>
-3. 检查SMock.json里的配置是否正确<br>
-</p>
+```bash
+let Core = require('smock-core').Core;
+new Core({
+  docPath:'xxx.xxx.xx.xx',
+  docPort:'80',
+  path:''
+})
+```
 
 ### 参数说明
 
-|Attributes|forma|describe
-|---|---|---|
-|host| string| 需要mock的文档地址ip或者域名
-|domain|string| 需要mock的文档访问域名。一般和host配合使用，如果文档是IP不能直接访问的形式，那么此处需要传入相应的值
-|path|string| 需要mock的文档数据请求路径，在swagger文档页面可以找到，如：/v2/api-docs
-|port| integer| 需要mock的文档地址端口号， 默认80，如果协议配置为https，此参数则变为443
-|projectName| string| 项目名，默认值swaggermock
-|mockPort| string| 本地mock服务启动后的端口，默认为3000
-|customProtocol| string| swagger文档支持的协议请求 http/https
-|override| boolean| 是否每次启动服务都覆盖原有json数据文件，默认为false，不覆盖
+|Attributes|forma|describe|default|
+|---|---|---|---|
+|type|String|文档数据源类型，暂只支持swagger|swagger|
+|docPath|String|type为swagger时，swagger文档访问路径|-|
+|docPort|Number|type为swagger时，swagger的文档端口号|80|
+|path|String|type为swagger时，swagger模式接口路径|/v2/api-docs|
+|method|String|type为swagger时，文档数据请求方式|GET|
+|realHostName|String|项目上线后访问的真实域名|-|
+|mockPort|Number|启动服务的端口号|3000|
+|customProtocol|String|type为swagger时，具体文档服务器协议http或https|http|
+|headers|Object|创建本地服务器时接口header附加参数|-|
+|jsPath|String|创建服务器时抽取Url路径文件的存储路径|-|
+|descInclude|Array|调用接口时展示接口文档的白名单|-|
+|override|Boolean|重启服务时是否重新刷新数据|false|
 
-### 运行
+## 代码架构
 
-<p>
-1. 在项目根目录下执行smock run，也可以执行smock run -o，此种情况表示更新所有的模拟数据，请谨慎操作。<br>
-2. 在项目中调用mock服务<br>
-</p>
+代码采用 typescript。
+代码校验：ESLint
 
-### 使用说明
+## 项目命令
 
-<p>
-访问如下形式的真实地址，即可看到模拟数据,端口默认为3000，可配置为其他值
-</p>
-
-```bash
-http://127.0.0.1:3000/xxx/xxx/xxx.do
-```
-
-<p>
-所有的接口路径请求，都生成在${projectName}/urlsReal.js里
-</p>
+npm run dev: 执行Demo,可热更新，使用VSCode来调试开发即可
+npm run build: 打包编译
+npm run test: 运行单元测试js
