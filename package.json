@@ -45,7 +45,7 @@
         "gulp-rename": "^1.4.0",
         "gulp-sass": "^4.0.2",
         "jest": "^23.6.0",
-        "node-sass": "^4.11.0",
+        "node-sass": "^7.0.0",
         "regenerator-runtime": "^0.13.1",
         "request": "^2.88.0",
         "request-promise-native": "^1.0.5",
